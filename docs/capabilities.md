@@ -37,6 +37,19 @@ This does not establish whether the root cause is the local/corporate resolver, 
 
 No DNS, host-file, firewall, public-access or private-endpoint settings were modified. No alternate public resolver, public tunnel, or insecure fallback endpoint was used.
 
+### Follow-up investigation
+
+- Azure Resource Health reports the selected resource as **Available**, with no known platform problem affecting it at query time. This is not a guarantee that every DNS path is healthy.
+- Sweden Central is the configured region. The observed CNAME chain routes to that region, and later per-link queries returned usable addresses. There is no evidence that merely selecting this region caused the failure.
+- The same account's separately published legacy model hostname resolved while the project endpoint family failed. It was used only as a DNS comparison, not as an unsupported evaluation fallback.
+- Python 3.13 and 3.14 both reproduced lookup failures. Both Requests and HTTPX failed at name resolution, before an HTTP status response; this is not isolated to one SDK or Python runtime.
+- Windows has namespace-specific DNS routing affecting the project endpoint family. Policy-resolver queries subsequently returned usable addresses. The local policy/security-client path is a leading hypothesis, not a proven client fault; upstream resolution and negative caching remain possible.
+- A CNAME-only reply is not successful endpoint resolution. One IPv6-type query returned aliases but no usable address and must not be reported as an IPv6 connectivity success.
+
+Detailed DNS policy values, security-client metadata, network addresses, hostnames and raw transcripts remain local. Public action tracking records sanitized findings only.
+
+Recommended next step: use the managed access client's approved health/DNS diagnostics with the network support team, correlate a failed normal lookup with the namespace-specific forwarding path, and confirm stable normal application resolution before resuming the live compatibility probe. Do not move regions or disable managed security controls based on these observations alone.
+
 ## Next gates
 
 1. Restore approved DNS/network access to the selected project hostname, or select a different explicitly approved project.
