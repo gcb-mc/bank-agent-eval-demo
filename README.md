@@ -4,7 +4,7 @@ A local HTML/JavaScript and Python demonstration of the evaluation lifecycle for
 
 **Status:** repository setup and SDK/resource compatibility discovery. The demo application is not implemented yet.
 
-**Current blocker:** the selected Foundry data-plane hostname does not resolve from the execution machine. Management-plane lookup works, but no live model/evaluation probe has been submitted. See the [capability report](docs/capabilities.md).
+**Current blocker:** intermittent DNS resolution of the selected Foundry data-plane hostname. The subscription/tenant match, token acquisition and one catalog retrieval are verified, but subsequent catalog requests still fail before inference. No model/evaluation probe has been submitted. See the [capability report](docs/capabilities.md).
 
 ## Intended experience
 
@@ -54,6 +54,6 @@ $env:AZURE_AI_MODEL_DEPLOYMENT_NAME = "<your-existing-deployment-name>"
 
 The default probe only reads the built-in evaluator catalog. After network access and resource selection are verified, `--live` explicitly authorizes one synthetic model response and one one-case coherence evaluation. It is a compatibility check, not a RAG quality assessment or a golden dataset.
 
-Evidence is written under ignored `artifacts\compatibility\` directories. Remote evaluation IDs are saved before polling. Automatic submission retries are disabled; inspect saved state before rerunning after an ambiguous error. Polling timeout does not mean the remote job stopped. The probe inspects cancellation API availability but does not test a real cancellation.
+Evidence is written under ignored `artifacts\compatibility\` directories. Remote evaluation IDs are saved before polling. Read-only catalog requests have bounded transient retries; automatic model/evaluation submission retries are disabled. Inspect saved state before rerunning after an ambiguous error. Polling timeout does not mean the remote job stopped. The probe inspects cancellation API availability but does not test a real cancellation.
 
 Hosted-agent deployment, the UI, RAG implementation, monitoring and observability remain future steps. Do not treat passing local tests as proof of live Azure connectivity.

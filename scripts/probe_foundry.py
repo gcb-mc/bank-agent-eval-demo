@@ -83,7 +83,7 @@ def probe(output, live):
         with AIProjectClient(
             endpoint=endpoint,
             credential=credential,
-            retry_total=0,
+            retry_total=2,
             allow_preview=True,
             connection_timeout=15,
             read_timeout=30,
