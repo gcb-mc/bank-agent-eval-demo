@@ -10,7 +10,7 @@ This is a public, sanitized implementation roadmap. Local resource identifiers, 
 
 - Same-origin HTML/CSS/JavaScript UI served by a local Python FastAPI API.
 - Entra authentication and SDK calls only in the backend.
-- Two targets: Python-orchestrated RAG using Azure AI Search and Foundry models, and a native Foundry Agent Service agent.
+- Two targets: Python-orchestrated RAG using Azure AI Search and Foundry models, and a new hosted Foundry Agent Service demo agent.
 - Bounded durable jobs; SQLite plus raw JSON artifacts stored locally and ignored by Git.
 - Real Foundry cloud evaluation with complete paginated item-level output retrieval.
 - Local deterministic checks and supported SDK evaluators remain distinguishable from cloud evaluation.
@@ -36,6 +36,8 @@ This is a public, sanitized implementation roadmap. Local resource identifiers, 
 Each step has a GitHub issue. Record meaningful actions, results, decisions, blockers, and associated commits in the relevant issue. Do not close an issue based only on a scaffold or an unverified API assumption.
 
 ## Step 1: capability proof
+
+Execution choice: use a user-selected existing Foundry project and create a separate hosted demo agent. Do not modify unrelated agents. Minimal synthetic model/agent calls and one small evaluation are approved after resource selection; review required provisioning scope/cost before deploying the hosted agent.
 
 1. Inspect local Python, Azure CLI, GitHub CLI, container tools, and existing SDK versions without modifying global dependencies.
 2. Select the intended Azure project, models, agent, search service/index, and tenant. Reuse suitable resources; ask before any mutation or paid action.
